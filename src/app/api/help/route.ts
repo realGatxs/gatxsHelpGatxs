@@ -5,6 +5,7 @@ export async function POST(req: NextRequest) {
   const data = await req.json()
   const newHelp = await prisma.help.create({
     data: {
+      name: data.inputName,
       text: data.inputText,
       postCode: data.inputZIP,
     },

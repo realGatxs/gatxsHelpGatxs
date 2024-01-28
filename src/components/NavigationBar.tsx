@@ -8,7 +8,7 @@ function NavigationBar() {
         <Link href="/">
           <SmallButton
             label={"Home"}
-            className={"bg-white text-grey-solid w-16 h-9 rounded-md"}
+            className={"bg-white text-blue w-16 h-9 rounded-md"}
           />
         </Link>
         <Link href="/form">

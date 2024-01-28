@@ -18,4 +18,5 @@ model Help {
   updatedAt DateTime @updatedAt
   text      String
   postCode  String
+  name      String
 }

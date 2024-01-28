@@ -5,12 +5,12 @@ import MapContainer from "@/components/MapContainer";
 import NeedList from "@/components/NeedList";
 import SearchBar from "@/components/SearchBar";
 import { Help } from "@prisma/client";
-import { codes } from "@/lib/data";
+import { codeCoordinates } from "@/lib/data";
 
 export default function MapPage() {
 	const [location, setLocation] = React.useState([51.334884, 12.407173]);
 	const [helps, setHelps] = React.useState<Help[]>([]);
-	const [zip, setZip] = React.useState(codes[0]);
+	const [selectedZip, setSelectedZip] = React.useState("");
 
 	React.useEffect(() => {
 		navigator.geolocation.getCurrentPosition((position) => {
@@ -23,14 +23,14 @@ export default function MapPage() {
 	}, [location]);
 
 	React.useEffect(() => {
-		fetch(`/api/help?zip=${zip}`)
+		fetch(`/api/help?zip=${selectedZip}`)
 			.then((res) => res.json())
 			.then((res) => setHelps(res.helps));
-	}, [zip]);
+	}, [selectedZip]);
 
 	return (
 		<>
-			<SearchBar selected={zip} setSelected={setZip} fixed />
+			{/* <SearchBar selected={zip} setSelected={setZip} fixed /> */}
 			<div className="bg-blue">
 				<MapContainer
 					location={{
@@ -42,10 +42,13 @@ export default function MapPage() {
 						lng: 12.40062237421821,
 					}}
 					zoom={10}
+					zipCodes={codeCoordinates}
+					selectedZip={""}
+					setSelectedZip={setSelectedZip}
 				/>
 				{helps.map((help) => (
 					<div key={help.id} className="text-white p-5">
-						Need help with:
+						{help.name} needs help with:
 						<NeedList text={help.text} />
 					</div>
 				))}
