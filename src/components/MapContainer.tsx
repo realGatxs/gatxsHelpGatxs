@@ -1,7 +1,7 @@
 import { codeCoordinates } from "@/lib/data";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { withCoalescedInvoke } from "next/dist/lib/coalesced-function";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiScale } from "react-icons/hi";
 import NeedList from "./NeedList";
 
@@ -43,6 +43,20 @@ export const MapContainer: React.FunctionComponent<MapProps> = ({
 
 	const [markers, setMarkers] = useState(zipCodes);
 
+	console.log(window);
+
+	function iconSize() {
+		if (window.google) return new window.google.maps.Size(24, 24);
+		return;
+	}
+
+	// async function scale(){
+	// 	const scale = await new window.google.maps.Size(24, 24)
+	// 	return
+	// }
+
+	// const iconSize = new window.google.maps.Size(24, 24);
+
 	return (
 		<LoadScript googleMapsApiKey="AIzaSyA28m7V-M_PyA-vuUQzwX_IczXhKNWScPM">
 			<GoogleMap
@@ -55,7 +69,7 @@ export const MapContainer: React.FunctionComponent<MapProps> = ({
 						<Marker
 							icon={{
 								url: "https://cdn.icon-icons.com/icons2/2248/PNG/512/cat_icon_138789.png",
-								scale: `${new window.google.maps.Size(24, 24)}`,
+								scaledSize: iconSize(),
 							}}
 							key={`${marker.code}` + `-${idx}`}
 							position={marker.coordinates}
